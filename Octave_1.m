@@ -2,7 +2,7 @@ function Octave_1()
 
 %{
 
-    Octave test function
+    Octave test function; for GitHub
 
 %}
 

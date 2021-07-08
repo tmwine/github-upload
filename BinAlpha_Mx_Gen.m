@@ -3,8 +3,14 @@ function BinAlpha_Mx_Gen_1(mx_sz,d_1,d_2,delta,p_and_s)
 %{
 
 	generates Mi*P matrices for binary alphabets ({0,1})
-	expects proportion spread (mx_sz; analagous to simplex height in alphabets > 2 symbols), and shift amounts (d_1,d_2) (with d_1<=d_2, p_1=P(0)=d_2/(d_1+d_2)>=1/2, and d_1+d_2<=mx_sz), as well as regularity/randomness parameter, delta (in [0,1]), and pad and splice flag (p_and_s: 0 is pad only; 1 is pad-and-splice; 2 is splice only)
 
+	inputs:
+		mx_sz--proportion spread (analagous to simplex height in alphabets > 2 symbols)
+		d_1, d_2--shift amounts (with d_1<=d_2, p_1=P(0)=d_2/(d_1+d_2)>=1/2, and d_1+d_2<=mx_sz)
+		delta--regularity/randomness parameter, (in [0,1])
+		p_and_s--pad and splice flag (p_and_s: 0 is pad only; 1 is pad-and-splice; 2 is splice only)
+
+	outputs:
 	this has the option to save the resulting {M_1*P,M_2*P} matrix product pair in a .bin file, 
 	.bin file has standard header:
 	<k_sym>, <di_vals>, <hk>, <delta>, <p_and_s>, <nbrows>, <mxsz_vals>

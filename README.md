@@ -61,9 +61,9 @@ $./BinAlpha_Entropy prod_len num_sam MiP_file.bin
 Note:
 - from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant
 - there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
+ 
 
-
-#### z-score under an alphabet of 3 symbols
+  #### z-score under an alphabet of 3 symbols
 
 Assign a z-score to the 300-long 3-symbol sequence
 ```

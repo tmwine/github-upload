@@ -62,6 +62,53 @@ Note:
 - from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant
 - there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
 
+  #### z-score under an alphabet of 3 symbols
+
+Assign a z-score to the 300 symbol sequence
+```
+231112112222121122213111212111121212221221213111223312311112211121232121233323131221222333312312112132311313111121122122211123221311311231112212312132233122232213122211121122231111212211212311111231112232222221121122312211211211113112322112211122212121123122233121121131131232311212332333121131222221
+```
+under a 3 symbol alphabet with shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
+
+In Octave, run 
+```
+>>MultAlpha_Mx_Gen(3,[2,2,5],16,0.01,1)
+```
+and save the Si forms (say as Si_file) and the Mi*P forms when prompted (say as MiP_file.bin). This produces 5 block rows: 2 of dimension 18, 2 of dimension 19, and 1 of dimension 20.
+
+To compute the Lyapunov exponent and variance, there are two main options:
+-option 1 (low level): if nbrows is the number of block rows, run from the command line
+    ```$./LV_MC_MA prod_len num_sam MiP_file.bin block_row_#
+	``` 
+    for each block row. Note, if there are symmetries (for instance if some of the d_i are equal to each other), this can be unecessarily time consuming because LE/var values for isomorphic block rows are necessarily the same.
+-option 2 (checking for symmetries first): in Octave, run
+    ```
+    >>MultAlpha_Iso_Fam("Si_file")
+    ```
+    and save the output block row family file (say as fam_file); then from Octave run
+    ```
+    >>MultAlpha_Le_Var_MC(prod_len,num_sam,"MiP_file.bin","fam_file")
+    ```
+    this has the advantage of MultAlpha_Iso_Fam having checked for block row isomorphisms, so MultAlpha_Le_Var_MC's internal calls to LV_MC_MA will be run only on necessary block rows (mutually non-isomorphic)
+	this shows the 2 block rows of dimension 18 are isomorphic, and so are the 2 block rows of dimension 19, making 3 block row families total
+
+For the LE/var estimates: #1, LE: -2.033874, var: 3.633530; #2, LE: -1.914878, var: 3.926234; #3, LE: -1.877799, var: 4.010124.
+
+The Lyapunov exponents from the different families show some separation; z-score calculation will use the maximal Lyapunov exponent, of -1.877799; for z-scores to be accurate, the length of the sequence under test should be at least as long as 10 times the matrix dimension--so > 200 symbols; the other consideration is, ideally, sufficient separation from the other bell curves; at a length m=300, the mean of the largest and next-to-largest block row families will be around -563 and -574, respectively; with a standard deviation of ~2 for each curve, this should allow sufficient separation.
+
+As an optional step, the LE/var calculations can be checked, and a correction factor can be estimated by running in Octave 
+```
+>>Bell_Plot(prod_len,num_sam,lambda,varn,"MiP_file.bin")
+```
+where lambda and varn correspond to the block row with the largest Lyapunov exponent (in this case, that of block row family #3), and prod_len is approximately the product length under test, and num_sam is sufficiently large to get a relatively smooth sample curve; the correction factor (call it cf) becomes more important when the sequence length is short; in this example, cf is estimated to be 9.0
+
+From the command line, run
+```
+$./MultAlpha_Fast_CL MiP_file.bin 23111...
+```
+This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(prod_len\*lambda+cf))/sqrt(prod_len\*varn) = -0.2170443138.
+
+
 
 ### Variable types
    

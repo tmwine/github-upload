@@ -62,6 +62,7 @@ Note:
 - from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant
 - there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
 
+
   #### z-score under an alphabet of 3 symbols
 
 Assign a z-score to the 300 symbol sequence
@@ -78,7 +79,8 @@ and save the Si forms (say as Si_file) and the Mi*P forms (say as MiP_file.bin) 
 
 To compute the Lyapunov exponent and variance, there are two main options:
 - option 1 (low level): if nbrows is the number of block rows, run from the command line
-    ```$./LV_MC_MA prod_len num_sam MiP_file.bin block_row_#
+    ```
+    $./LV_MC_MA prod_len num_sam MiP_file.bin block_row_#
 	``` 
     for each block row. Note, if there are symmetries (for instance if some of the d_i are equal to each other), this can be unecessarily time consuming because LE/var values for isomorphic block rows are necessarily the same.
 - option 2 (checking for symmetries first): in Octave, run
@@ -89,12 +91,11 @@ To compute the Lyapunov exponent and variance, there are two main options:
     ```
     >>MultAlpha_Le_Var_MC(prod_len,num_sam,"MiP_file.bin","fam_file")
     ```
-    this has the advantage of MultAlpha_Iso_Fam having checked for block row isomorphisms, so MultAlpha_Le_Var_MC's internal calls to LV_MC_MA will be run only on necessary block rows (mutually non-isomorphic)
-	this shows the 2 block rows of dimension 18 are isomorphic, and so are the 2 block rows of dimension 19, making 3 block row families total
+    This has the advantage of MultAlpha_Iso_Fam having checked for block row isomorphisms, so MultAlpha_Le_Var_MC's internal calls to LV_MC_MA will be run only on necessary block rows (mutually non-isomorphic). This shows the 2 block rows of dimension 18 are isomorphic, and so are the 2 block rows of dimension 19, making 3 block row families total.
 
 For the LE/var estimates: #1, LE: -2.033874, var: 3.633530; #2, LE: -1.914878, var: 3.926234; #3, LE: -1.877799, var: 4.010124.
 
-The Lyapunov exponents from the different families show some separation; z-score calculation will use the maximal Lyapunov exponent, of -1.877799; for z-scores to be accurate, the length of the sequence under test should be at least as long as 10 times the matrix dimension--so > 200 symbols; the other consideration is, ideally, sufficient separation from the other bell curves; at a length m=300, the mean of the largest and next-to-largest block row families will be around -563 and -574, respectively; with a standard deviation of ~2 for each curve, this should allow sufficient separation.
+The Lyapunov exponents from the different families show minimal separation magnitude of ~0.04. Z-score calculation will use the maximal Lyapunov exponent, of -1.877799. For z-scores to be accurate, the length of the sequence under test should be at least as long as 10 times the matrix dimension--so > 200 symbols. The other consideration is, ideally, sufficient separation from the other block rows' bell curves. At a length m=300, the mean of the largest and next-to-largest block row families will be around -563 and -574, respectively. With a standard deviation of ~2 for each curve, this should allow for sufficient separation.
 
 As an optional step, the LE/var calculations can be checked, and a correction factor can be estimated by running in Octave 
 ```

@@ -63,13 +63,13 @@ Note:
 - there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
 
 
-  #### z-score under an alphabet of 3 symbols
+#### z-score under an alphabet of 3 symbols
 
-Assign a z-score to the 300 symbol sequence
+Assign a z-score to the 300-long 3-symbol sequence
 ```
 231112112222121122213111212111121212221221213111223312311112211121232121233323131221222333312312112132311313111121122122211123221311311231112212312132233122232213122211121122231111212211212311111231112232222221121122312211211211113112322112211122212121123122233121121131131232311212332333121131222221
 ```
-under a 3 symbol alphabet with shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
+under shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
 
 In Octave, run 
 ```

@@ -4,21 +4,40 @@ This repository contains the routines for assigning a regularity z-score to a sy
 
 ### Some examples using the routines
 
-  #### z-score for a binary alphabet
+  #### z-score under a binary alphabet
 
 Assign a z-score to sequence "00100010101000011111" under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
 
-In Octave, run >>BinAlpha_Mx_Gen(2,1,1,0.5,1), and save when prompted (say as MiP_file.bin).
+In Octave, run 
+```
+>>BinAlpha_Mx_Gen(2,1,1,0.5,1)
+```
+and save when prompted (say as MiP_file.bin).
 
 If the Lyapunov exponent and variance have not yet been estimated,
-- from the command line, run $./LV_MC_BA [prod_len] [num_sam] MiP_file.bin (let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725662, varn~0.0255641)
-- (alternatively, hard code name of binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run >>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin))
-- nb: parameter values for robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50)
-- as an optional step, sample vs theoretical bell curves can be plotted, and a correction factor can be estimated by running in Octave >>Bell_Plot(prod_len,num_sam,lambda,varn,MiP_file.bin), where prod_len is approximately the product length under test (here, 20), and num_sam is sufficiently large to get a smooth sample curve (in practice, say around 1e4); the correction factor (call it cf) becomes more important when the sequence length is short, of order 10*(matrix dim) (as a rule of thumb, the sequence under test should not be shorter); in this example, cf is estimated to be 0.7
+- from the command line, run 
+```
+$./LV_MC_BA prod_len num_sam MiP_file.bin
+```
+(let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725, varn~0.0255641)
+- (alternatively, hard code name of binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
+``` 
+>>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin))
+```
+- (nb: parameter values for robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50))
+- as an optional step, sample vs theoretical bell curves can be plotted, and a correction factor can be estimated by running in Octave
+```
+>>Bell_Plot(prod_len,num_sam,lambda,varn,MiP_file.bin)
+```
+where prod_len is approximately the product length under test (here, 20), and num_sam is sufficiently large to get a smooth sample curve (in practice, say of order 1e4); the correction factor (call it cf) becomes more important when the sequence length is short, of order 10*(matrix dim) (as a rule of thumb, the sequence under test should not be shorter); in this example, cf is estimated to be 0.7
 
-From the command line, run $./BinAlpha_Fast_CL MiP_file.bin 00100010101000011111. This gives x=log||.||=-7.93455.
+From the command line, run 
+```
+$./BinAlpha_Fast_CL MiP_file.bin 00100010101000011111
+```
+This gives x=log||.||=-7.93455.
 
-Compute the z-score: z-score = (x-(prod_len*lambda+cf))/sqrt(prod_len*varn) = -0.38764
+Compute the z-score: z-score = (x-(prod_len*lambda+cf))/sqrt(prod_len*varn) = -0.38764.
 
 
 

@@ -17,10 +17,10 @@ and save when prompted (say as MiP_file.bin).
 If the Lyapunov exponent and variance have not yet been estimated,
 - from the command line, run
 
-```
-$./LV_MC_BA prod_len num_sam MiP_file.bin
-```
-(let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725, varn~0.0255641)
+    ```
+    $./LV_MC_BA prod_len num_sam MiP_file.bin
+    ```
+    (let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725, varn~0.0255641)
 - (alternatively, hard code name of binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
 ``` 
 >>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin)

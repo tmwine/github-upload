@@ -4,6 +4,8 @@ This repository contains the routines for assigning a regularity z-score to a sy
 
 ### Some examples using the routines
 
+These examples assume the .cpp files have been compiled under their respective filenames.
+
   #### z-score under a binary alphabet
 
 Assign a z-score to sequence "00100010101000011111" under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
@@ -38,9 +40,7 @@ From the command line, run
 ```
 $./BinAlpha_Fast_CL MiP_file.bin 00100010101000011111
 ```
-This gives x=log||.||=-7.93455.
-
-Compute the z-score: z-score = (x-(prod_len*lambda+cf))/sqrt(prod_len*varn) = -0.38764.
+This gives x=log||.||=-7.93455. Then compute the z-score: z-score = (x-(prod_len\*lambda+cf))/sqrt(prod_len\*varn) = -0.38764.
 
 
 

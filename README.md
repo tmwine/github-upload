@@ -4,9 +4,9 @@ This repository contains the routines for assigning a regularity z-score to a sy
 
 ### Some Examples
 
-  ####z-score for a binary alphabet
+  #### z-score for a binary alphabet
 
-	Assign az-score to sequence "00100010101000011111" under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
+	Assign a z-score to sequence "00100010101000011111" under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
 
 	In Octave, run >BinAlpha_Mx_Gen(2,1,1,0.5,1), and save when prompted (say as MiP_file.bin).
 

@@ -42,6 +42,25 @@ $./BinAlpha_Fast_CL MiP_file.bin 00100010101000011111
 ```
 This gives x=log||.||=-7.93455. Then compute the z-score: z-score = (x-(prod_len\*lambda+cf))/sqrt(prod_len\*varn) = -0.38764.
 
+  #### entropy of a given distribution
+
+Estimate the entropy of binary sequences of length 50 under the distribution with parameters p=3/5, matrix dim=5, delta=0.25, pad-only.
+
+In Octave, run 
+```
+>>BinAlpha_Mx_Gen(5,2,3,0.25,0)
+```
+and save when prompted (say as MiP_file.bin).
+
+From the command line, run 
+```
+$./BinAlpha_Entropy prod_len num_sam MiP_file.bin
+```
+(nb: prod_len must be kept short for this to execute in reasonable timespans (on typical 2020's-era processors, say < 200), and num_sam of order 1e5).)
+
+Note:
+- from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant
+- there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
 
 
 ### Variable types

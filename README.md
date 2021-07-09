@@ -74,14 +74,14 @@ In Octave, run
 ```
 >>MultAlpha_Mx_Gen(3,[2,2,5],16,0.01,1)
 ```
-and save the Si forms (say as Si_file) and the Mi*P forms when prompted (say as MiP_file.bin). This produces 5 block rows: 2 of dimension 18, 2 of dimension 19, and 1 of dimension 20.
+and save the Si forms (say as Si_file) and the Mi*P forms (say as MiP_file.bin) when prompted. This produces 5 block rows: 2 of dimension 18, 2 of dimension 19, and 1 of dimension 20.
 
 To compute the Lyapunov exponent and variance, there are two main options:
--option 1 (low level): if nbrows is the number of block rows, run from the command line
+- option 1 (low level): if nbrows is the number of block rows, run from the command line
     ```$./LV_MC_MA prod_len num_sam MiP_file.bin block_row_#
 	``` 
     for each block row. Note, if there are symmetries (for instance if some of the d_i are equal to each other), this can be unecessarily time consuming because LE/var values for isomorphic block rows are necessarily the same.
--option 2 (checking for symmetries first): in Octave, run
+- option 2 (checking for symmetries first): in Octave, run
     ```
     >>MultAlpha_Iso_Fam("Si_file")
     ```

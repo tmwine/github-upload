@@ -101,9 +101,20 @@ As an optional step, the LE/var calculations can be checked, and a correction fa
 ```
 >>Bell_Plot(prod_len,num_sam,lambda,varn,"MiP_file.bin")
 ```
-where lambda and varn correspond to the block row with the largest Lyapunov exponent (in this case, that of block row family #3), and prod_len is approximately the product length under test, and num_sam is sufficiently large to get a relatively smooth sample curve; the correction factor (call it cf) becomes more important when the sequence length is short; in this example, cf is estimated to be 9.0
+where lambda and varn correspond to the block row with the largest Lyapunov exponent (in this case, that of block row family #3), and prod_len is approximately the product length under test, and num_sam is sufficiently large to get a relatively smooth sample curve; the correction factor (call it cf) becomes more important when the sequence length is short; in this example, cf is estimated to be 9.0.
 
-From the command line, run
+As another optional step, the block row Si template matrices' graphs can be displayed. From Octave, run
+```
+MultAlpha_Graph_Disp("Si_file",block_row_#,"output_file")
+```
+where output_file is used as an intermediary Graphviz file. Then process with Graphviz's Kneato. From the command line, run
+```
+$dot -Kneato -Gsplines=true -Gsep=.3 -Tps output_file -o graphout.ps
+```
+This produces
+![image](/pictures/graph_2_2_5_16.ps)
+
+To complete the z-score, from the command line, run
 ```
 $./MultAlpha_Fast_CL MiP_file.bin 23111...
 ```

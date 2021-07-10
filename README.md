@@ -10,7 +10,7 @@ These examples assume the .cpp files have been compiled under their respective f
 
   #### z-score under a binary alphabet
 
-Assign a z-score to sequence "00100010101000011111" under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
+Assign a z-score to the sequence 00100010101000011111 under p=1/2, matrix dim=2, delta=0.5, pad-and-splice.
 
 In Octave, run 
 ```
@@ -25,7 +25,7 @@ If the Lyapunov exponent and variance have not yet been estimated,
     $./LV_MC_BA prod_len num_sam MiP_file.bin
     ```
     (let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725, varn~0.0255641)
-- (alternatively, hard code name of binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
+- (alternatively, hard code the name of the binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
     ``` 
     >>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin)
     ```
@@ -111,11 +111,11 @@ where output_file is used as an intermediary Graphviz file. Then process with Gr
 ```
 $dot -Kneato -Gsplines=true -Gsep=.3 -Tps output_file -o graphout.ps
 ```
-Here is the graph corresponding to the first block row:
+Here is the cylinder graph corresponding to the first block row:
 ![image](https://github.com/tmwine/github-upload/blob/master/pictures/graph_2_2_5_16.jpg)
 
 
-To complete the z-score, from the command line, run
+To complete the z-score estimation, from the command line, run
 ```
 $./MultAlpha_Fast_CL MiP_file.bin 23111...
 ```

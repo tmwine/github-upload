@@ -3,11 +3,15 @@
 	Monte Carlo routine for estimating Lyapunov exponent and variance, for alphabets of > 2 symbols
 	this routine operates on a specified block row
 
+	input:
 	this expects, on the command line, <prod_len> <num_sam> <Mi*P data filename> <block row to use>
 	<prod_len> is the number of matrices in each product chain
 	<num_sam> is the number of product chains
 	<Mi*P data file> is the name of the .bin file holding the relevant Mi*P matrix product set
 	<block row to use> is the matrix block row to perform the Monte Carlo sampling on
+
+	output:
+	displays the Lyapunov exponent and variance in a standard format (readable for example by MultAlpha_Le_Var_MC)--"Lyapunov exponent...\n" and "Lyapunov variance...\n" each followed on the next line by the respective values
 
 	this allows toggling between C++ <random> and C rand(), with the former a better randomizer but probably around 5-10% slower; to change the randomizer method:
 		keyword search the code for "~RANDOMIZER~"
@@ -49,7 +53,7 @@ using namespace std; // this is generally bad practice
 #define PAD_ONLY 0
 #define PAD_AND_SPLICE 1
 #define SPLICE_ONLY 2
-#define RAND_RANGE 100000 // this is the desired resolution for the main Monte Carlo randomizer
+#define RAND_RANGE 10000000 // this is the desired resolution for the main Monte Carlo randomizer
 #define RAND_ACC 10000.0 // this to check compatibility between RAND_RANGE and RAND_MAX (C library constant), for use with rand(); if RAND_MAX/RAND_RANGE is too small, the "remainder" error when modding rand()'s output by RAND_RANGE can unduly distort from uniform randomness
 #define P_ERR 0.01 // this is a ~nice-to-have check for inconsistency in p_vals
 
@@ -241,8 +245,7 @@ int main(int argc,char *argv[])
 	for (ii=0; ii<k_sym; ii++) {
 		cout << di_vals[ii] << " ";
 	}
-	cout << endl;
-	cout << "; pl=" << prod_len << "; ns=" << num_sam;
+	cout << "; prod_len=" << prod_len << "; num_sam=" << num_sam;
 	cout << endl;
 
 
@@ -292,6 +295,8 @@ int main(int argc,char *argv[])
 	if (fabs(pv_cdf[k_sym-1]-1.0)>P_ERR) { // double check--the p_vals cdf vec should be very close to 1.0 in last position
 		cout << "Error: p_vals in file do not sum closely to 1." << endl;
 		return 1;
+	} else {
+		pv_cdf[k_sym-1] = 1.0; // if no errors detected in probability sum, then ensure cumulative distribution ends with 1.0
 	}
 
 

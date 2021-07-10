@@ -39,7 +39,7 @@ default_file = ""; % optional, for default save output file
 %***
 
 LV_MC_MA_file = ""; % non-optional, for user to indicate the C++ MC routine file (generated from LV_MC_BA.cpp)
-if isnull(LV_MC_MA_FILE)
+if isnull(LV_MC_MA_file)
 	printf("assign filename string to LV_MC_MA_FILE in code for LV_MC_MA.cpp executable\n");
 	return
 endif

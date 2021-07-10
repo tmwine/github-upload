@@ -1,6 +1,8 @@
 # github-upload
 
-This repository contains the routines for assigning a regularity z-score to a symbolic sequenc (from the paper [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h)). Most are written in Octave. A few are in C++, for the sake of speed.
+This repository contains the routines for assigning a regularity z-score to a symbolic sequence, as well as determining the entropy of associated distributions in the binary case (from the paper [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h)). Most are written in Octave. A few are in C++, for the sake of speed.
+
+First are some examples. The routines and main variable types are explained in more detail afterward.
 
 ### Some examples using the routines
 
@@ -58,9 +60,7 @@ $./BinAlpha_Entropy prod_len num_sam MiP_file.bin
 ```
 (nb: prod_len must be kept short for this to execute in reasonable timespans (on typical 2020's-era processors, say < 200), and num_sam of order 1e5).)
 
-Note:
-- from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant
-- there is not yet an entropy routine for longer alphabets (>2 symbols); this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
+Note, from the results of the paper, if h_est is the result of the resampled Monte Carlo routine, then the average entropy, h_est/prod_len, should be approximately constant. Also, for alphabets of > 2 symbols there is not yet an entropy routine; this would just involve incorporating block row matrix multiplication in the BinAlpha_Entropy routine
  
 
   #### z-score under an alphabet of 3 symbols
@@ -107,11 +107,11 @@ As another optional step, the block row Si template matrices' graphs can be disp
 ```
 MultAlpha_Graph_Disp("Si_file",block_row_#,"output_file")
 ```
-where output_file is used as an intermediary Graphviz file. Then process with Graphviz's Kneato. From the command line, run
+where output_file is used as an intermediary Graphviz file. Then process with Graphviz's Kneato--from the command line, run
 ```
 $dot -Kneato -Gsplines=true -Gsep=.3 -Tps output_file -o graphout.ps
 ```
-This produces
+Here is the graph corresponding to the first block row:
 ![image](https://github.com/tmwine/github-upload/blob/master/pictures/graph_2_2_5_16.jpg)
 
 
@@ -164,11 +164,12 @@ This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(pro
 ### Routines
 
   #### binary alphabets:
-  - BinAlpha_Mx_Gen.m: generates the {M<sub>1</sub>\*P,M<sub>2</sub>\*P} matrix set; gives option to save result in a .bin file
+  - BinAlpha_Mx_Gen.m: generates the {M<sub>1</sub>\*P,M<sub>2</sub>\*P,P} matrix set; gives option to save result in a .bin file
   - BinAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_BA.cpp's executable via system call
       - LV_MC_BA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
   - BinAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
   - BinAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
+  - BinAlpha_Entropy.cpp: entropy estimator for binary distributions; receives an Mi\*P .bin filename and returns the entropy estimate associated with sequences of a fixed length
 
 
   #### alphabets with > 2 symbols:
@@ -184,10 +185,14 @@ This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(pro
       - LV_MC_MA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
   - MultAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
   - MultAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
-  - MultAlpha_Graph_Disp.m: given a .m file containing Si_mx_cells and graph_array data, creates a .dot (.gv) file that can be rendered in eg GraphViz to display a given block row's graph
+  - MultAlpha_Graph_Disp.m: for alphabets of > 2 symbols, given an .m file containing Si_mx_cells and graph_array data, creates a .dot (.gv) file that can be rendered in eg GraphViz to display a given block row's graph
 
   #### for any alphabet:
   - Slow_Mult.m: a slower (Octave) routine for multiplying the matrices corresponding to an input symbol sequence; returns the log of the entrywise norm of the product
   - Bell_Plot.m: for a given sample size, will compute (generalized Bernoulli) random matrix products and plot their histogram; the plot is compared against the theoretical Gaussian, from the Lyapunov exponent and variance, in accordance with the central limit theorem; will also estimate a correction factor--for obtaining more accurate z-scores for relatively short symbolic sequences
+
+### License
+
+This project is licensed under the terms of the MIT license.
 
 

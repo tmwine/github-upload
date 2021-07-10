@@ -112,7 +112,8 @@ where output_file is used as an intermediary Graphviz file. Then process with Gr
 $dot -Kneato -Gsplines=true -Gsep=.3 -Tps output_file -o graphout.ps
 ```
 This produces
-![image](/pictures/graph_2_2_5_16.ps)
+![image](https://github.com/tmwine/github-upload/blob/master/pictures/graph_2_2_5_16.ps)
+
 
 To complete the z-score, from the command line, run
 ```

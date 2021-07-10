@@ -124,7 +124,8 @@ This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(pro
 
 
 ### Variable types
-   
+
+Some of the more important variables and data structures used in the routines are listed here.
  
 - data_header--an Octave structure describing the sequence type (and regularity template information); its fields are:
   - .k_sym (scalar): number of symbols
@@ -162,6 +163,8 @@ This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(pro
 
 
 ### Routines
+
+This section lists all of the available routines, including a short description.
 
   #### binary alphabets:
   - BinAlpha_Mx_Gen.m: generates the {M<sub>1</sub>\*P,M<sub>2</sub>\*P,P} matrix set; gives option to save result in a .bin file

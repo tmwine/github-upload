@@ -1,6 +1,6 @@
 # github-upload
 
-This project contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1</sub>,...,d<sub>k</sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
+This repository contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1</sub>,...,d<sub>k</sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
 
 First are some examples. The routines and main variable types are explained in more detail afterward.
 
@@ -26,7 +26,7 @@ If the Lyapunov exponent and variance have not yet been estimated,
     ```
     $./LV_MC_BA prod_len num_sam MiP_file.bin
     ```
-	where for guidance in choosing the best matrix product (ie sequence) length and number of samples, consider that robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50). In this case, let lambda be the Lyapunov exponent, and varn the variance, then lambda~-0.417725, varn~0.0255641.
+	where for guidance in choosing the best matrix product (ie sequence) length and number of samples, consider that robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50); in this example, let lambda be the Lyapunov exponent, and varn the variance, then lambda~-0.417725, varn~0.0255641.
 - (alternatively, hard code the name of the binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
     ``` 
     >>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin)
@@ -200,6 +200,6 @@ Some of the more important variables and data structures used in the routines ar
 
 ### License
 
-This project is licensed under the terms of the MIT license.
+This code is licensed under the terms of the MIT license.
 
 

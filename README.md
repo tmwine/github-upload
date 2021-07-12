@@ -1,8 +1,10 @@
 # github-upload
 
-This repository contains the routines for assigning a regularity z-score to a symbolic sequence, as well as determining the entropy of associated distributions in the binary case (from the paper [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h)). Most are written in Octave. A few are in C++, for the sake of speed.
+This project contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1<sub>,...,d<sub>k<sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
 
 First are some examples. The routines and main variable types are explained in more detail afterward.
+
+
 
 ### Some examples using the routines
 
@@ -69,7 +71,7 @@ Assign a z-score to the 300-long 3-symbol sequence
 ```
 231112112222121122213111212111121212221221213111223312311112211121232121233323131221222333312312112132311313111121122122211123221311311231112212312132233122232213122211121122231111212211212311111231112232222221121122312211211211113112322112211122212121123122233121121131131232311212332333121131222221
 ```
-under shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
+under shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6, from the relation P(i)=(1/d<sub>i<sub>)/(1/($\Sigma$<sub>i<sub> d<sub>i<sub>)), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
 
 In Octave, run 
 ```
@@ -123,6 +125,40 @@ This gives x = log||.|| = -561.8678. Then compute the z-score: z-score = (x-(pro
 
 
 
+### Routines
+
+Here is a list of the provided routines. See just below for definitions and details of the main variable and structure types.
+
+  #### binary alphabets:
+  - BinAlpha_Mx_Gen.m: generates the {M<sub>1</sub>\*P,M<sub>2</sub>\*P,P} matrix set; gives option to save result in a .bin file
+  - BinAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_BA.cpp's executable via system call
+      - LV_MC_BA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
+  - BinAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
+  - BinAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
+  - BinAlpha_Entropy.cpp: entropy estimator for binary distributions; receives an Mi\*P .bin filename and returns the entropy estimate associated with sequences of a fixed length
+
+
+  #### alphabets with > 2 symbols:
+  - MultAlpha_Mx_Gen.m: generates Si_mx_cells, graph_array, and Mi\*P matrix set; uses MultAlpha_Pare and MultAlpha_Routes; option to save results to standard files
+    - MultAlpha_Pare.m: used to pare rows and columns of zeros from initial simplex shift matrices
+    - MultAlpha_Routes.m: finds all cyclical routes in the pared matrix set; each set of connected cycles is portioned into a block row; uses MultAlpha_Graph_Gen
+        - MultAlpha_Graph_Gen.m: generates the graph_array array of Octave graph structures
+  - MultAlpha_Iso_Fam.m: given a .m file containing Si_mx_cells and graph_array data, finds all isomorphisms between block rows of the same matrix dimension, sorting them into families in a br_iso_families cell array; uses Iso_Perm_Layer and Iso_Full_Layer; option to save results
+    - Iso_Perm_Layer.m: initial check for potential isomorphism between two graphs, a test graph compared against a base graph; uses Iso_LH_Graph_Chk
+    - Iso_Full_Layer.m: completion of check of potential isomorphism between two graphs, test and base pairs that passed the checks at Iso_Perm_Layer; uses Iso_LH_Graph_Chk
+        - Iso_LH_Graph_Chk: creates a canonical node matrix for a graph, dependent on the starting node; uses a left-hand-turn rule
+  - MultAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_MA.cpp's executable via system call
+      - LV_MC_MA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
+  - MultAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
+  - MultAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
+  - MultAlpha_Graph_Disp.m: for alphabets of > 2 symbols, given an .m file containing Si_mx_cells and graph_array data, creates a .dot (.gv) file that can be rendered in eg GraphViz to display a given block row's graph
+
+  #### for any alphabet:
+  - Slow_Mult.m: a slower (Octave) routine for multiplying the matrices corresponding to an input symbol sequence; returns the log of the entrywise norm of the product
+  - Bell_Plot.m: for a given sample size, will compute (generalized Bernoulli) random matrix products and plot their histogram; the plot is compared against the theoretical Gaussian, from the Lyapunov exponent and variance, in accordance with the central limit theorem; will also estimate a correction factor--for obtaining more accurate z-scores for relatively short symbolic sequences
+
+
+
 ### Variable types
 
 Some of the more important variables and data structures used in the routines are listed here.
@@ -162,37 +198,6 @@ Some of the more important variables and data structures used in the routines ar
 - fam_LE_var_mx (matrix): used to record the results of the Monte Carlo Lyapunov exponent and variance estimates; each row corresponds to an indexed isomorphism family # (the order corresponding to order of appearance in br_iso_families); each row has elements [LE, var, product length, number of samples]
 
 
-### Routines
-
-This section lists all of the available routines, including a short description.
-
-  #### binary alphabets:
-  - BinAlpha_Mx_Gen.m: generates the {M<sub>1</sub>\*P,M<sub>2</sub>\*P,P} matrix set; gives option to save result in a .bin file
-  - BinAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_BA.cpp's executable via system call
-      - LV_MC_BA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
-  - BinAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
-  - BinAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
-  - BinAlpha_Entropy.cpp: entropy estimator for binary distributions; receives an Mi\*P .bin filename and returns the entropy estimate associated with sequences of a fixed length
-
-
-  #### alphabets with > 2 symbols:
-  - MultAlpha_Mx_Gen.m: generates Si_mx_cells, graph_array, and Mi\*P matrix set; uses MultAlpha_Pare and MultAlpha_Routes; option to save results to standard files
-    - MultAlpha_Pare.m: used to pare rows and columns of zeros from initial simplex shift matrices
-    - MultAlpha_Routes.m: finds all cyclical routes in the pared matrix set; each set of connected cycles is portioned into a block row; uses MultAlpha_Graph_Gen
-        - MultAlpha_Graph_Gen.m: generates the graph_array array of Octave graph structures
-  - MultAlpha_Iso_Fam.m: given a .m file containing Si_mx_cells and graph_array data, finds all isomorphisms between block rows of the same matrix dimension, sorting them into families in a br_iso_families cell array; uses Iso_Perm_Layer and Iso_Full_Layer; option to save results
-    - Iso_Perm_Layer.m: initial check for potential isomorphism between two graphs, a test graph compared against a base graph; uses Iso_LH_Graph_Chk
-    - Iso_Full_Layer.m: completion of check of potential isomorphism between two graphs, test and base pairs that passed the checks at Iso_Perm_Layer; uses Iso_LH_Graph_Chk
-        - Iso_LH_Graph_Chk: creates a canonical node matrix for a graph, dependent on the starting node; uses a left-hand-turn rule
-  - MultAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_MA.cpp's executable via system call
-      - LV_MC_MA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
-  - MultAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
-  - MultAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
-  - MultAlpha_Graph_Disp.m: for alphabets of > 2 symbols, given an .m file containing Si_mx_cells and graph_array data, creates a .dot (.gv) file that can be rendered in eg GraphViz to display a given block row's graph
-
-  #### for any alphabet:
-  - Slow_Mult.m: a slower (Octave) routine for multiplying the matrices corresponding to an input symbol sequence; returns the log of the entrywise norm of the product
-  - Bell_Plot.m: for a given sample size, will compute (generalized Bernoulli) random matrix products and plot their histogram; the plot is compared against the theoretical Gaussian, from the Lyapunov exponent and variance, in accordance with the central limit theorem; will also estimate a correction factor--for obtaining more accurate z-scores for relatively short symbolic sequences
 
 ### License
 

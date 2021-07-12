@@ -1,4 +1,4 @@
-# github-upload
+# matrix-sequence-regularity
 
 This repository contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1</sub>,...,d<sub>k</sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
 

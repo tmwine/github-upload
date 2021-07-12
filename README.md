@@ -1,6 +1,6 @@
 # github-upload
 
-This project contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1<sub>,...,d<sub>k<sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
+This project contains the routines used in the paper, [A Matrix-Based Regularity Measure for Symbolic Sequences](https://osf.io/vpg8h). The functions allow the assignment of a regularity z-score to any symbolic sequence of sufficient length. They also allow the determination of the symbolic sequence homogeneity entropy for the regularity distribution associated with any {{d<sub>1</sub>,...,d<sub>k</sub>},delta,rho} parameter set. Most of the routines are written in Octave. A few are in C++, for the sake of speed.
 
 First are some examples. The routines and main variable types are explained in more detail afterward.
 
@@ -71,7 +71,7 @@ Assign a z-score to the 300-long 3-symbol sequence
 ```
 231112112222121122213111212111121212221221213111223312311112211121232121233323131221222333312312112132311313111121122122211123221311311231112212312132233122232213122211121122231111212211212311111231112232222221121122312211211211113112322112211122212121123122233121121131131232311212332333121131222221
 ```
-under shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6, from the relation P(i)=(1/d<sub>i<sub>)/(1/($\Sigma$<sub>i<sub> d<sub>i<sub>)), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
+under shift amounts [2,2,5] (corresponding to probabilities P(1)=P(2)=5/12, P(3)=1/6, from the relation P(i)=(1/d<sub>i</sub>)/(1/($\Sigma$<sub>i</sub> d<sub>i</sub>)), at simplex height 16 (minimal), delta=0.01, pad-and-splice.
 
 In Octave, run 
 ```

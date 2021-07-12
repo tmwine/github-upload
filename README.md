@@ -8,7 +8,7 @@ First are some examples. The routines and main variable types are explained in m
 
 ### Some examples using the routines
 
-These examples assume the .cpp files have been compiled under their respective filenames.
+Note, these examples assume the .cpp files have been compiled under their respective filenames.
 
   #### z-score under a binary alphabet
 
@@ -26,13 +26,12 @@ If the Lyapunov exponent and variance have not yet been estimated,
     ```
     $./LV_MC_BA prod_len num_sam MiP_file.bin
     ```
-    (let lambda be the Lyapunov exponent, and varn the variance; lambda~-0.417725, varn~0.0255641)
+	where for guidance in choosing the best matrix product (ie sequence) length and number of samples, consider that robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50). In this case, let lambda be the Lyapunov exponent, and varn the variance, then lambda~-0.417725, varn~0.0255641.
 - (alternatively, hard code the name of the binary Monte Carlo .cpp file into BinAlpha_Le_Var_MC.m; then in Octave, run
     ``` 
     >>BinAlpha_Le_Var_MC(prod_len,num_sam,MiP_file.bin)
     ```
     )
-- (nb: parameter values for robust results from brute force Monte Carlo with binary alphabets tended to be of order prod_len=1000000, num_sam=100000 (provided matrix size is not too large, say < 50))
 - as an optional step, sample vs theoretical bell curves can be plotted, and a correction factor can be estimated by running in Octave
 
     ```

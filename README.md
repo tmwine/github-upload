@@ -148,8 +148,9 @@ Here is a list of the provided routines. See just below for definitions and deta
         - Iso_LH_Graph_Chk: creates a canonical node matrix for a graph, dependent on the starting node; uses a left-hand-turn rule
   - MultAlpha_Le_Var_MC.m: manages the Monte Carlo estimates for Lyapunov exponent and variance; drives LV_MC_MA.cpp's executable via system call
       - LV_MC_MA.cpp: Monte Carlo estimates for Lyapunov exponent and variance; receives an Mi\*P .bin filename
-  - MultAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter binary symbol sequence on the command line; returns the log of the entrywise norm of the product
-  - MultAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads binary symbol sequence from text file; returns the log of the entrywise norm of the product
+  - MultAlpha_Fast_CL.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; enter 1,...,k symbol sequence on the command line; returns the log of the entrywise norm of the product
+  - MultAlpha_Fast_File.cpp: fast matrix multiplier routine; receives an Mi\*P .bin filename; reads 1,...,k symbol sequence from text file; returns the log of the entrywise norm of the product
+  - MultAlpha_Fast_file_Batch.cpp: batch version of MultAlpha_Fast_File.cpp, fast matrix multiplier routine; receives an Mi\*P .bin filename; reads a file with a 1,...,k symbol sequence on each line; returns a file with respective log of the entrywise norm of the product on each line
   - MultAlpha_Graph_Disp.m: for alphabets of > 2 symbols, given an .m file containing Si_mx_cells and graph_array data, creates a .dot (.gv) file that can be rendered in eg GraphViz to display a given block row's graph
 
   #### for any alphabet:
